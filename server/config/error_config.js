@@ -1,0 +1,1 @@
+new ApolloError(message, code, additionalProperties);
