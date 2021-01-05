@@ -14,9 +14,6 @@ export  default () => {
     const app_category_apps = db.import("./models/app_category_apps")
     const users = db.import("./models/users")
 
-    return {
-      db,
-      organizations
-    };
+    
   };
   
