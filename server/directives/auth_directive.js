@@ -40,8 +40,9 @@ export default class AuthDirective extends SchemaDirectiveVisitor {
         }
 
         const context = args[2];
-        console.log('requiredRole', requiredRole);
+        console.log('requiredRole', context.loggedInUser.roles);
         // const user = await getUser(context.headers.authToken);
+        // if (context.loggedInUser.roles.indexOf("Applde")) {
         if (context.role != requiredRole) {
           throw new Error("not authorized");
         }

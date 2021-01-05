@@ -2,6 +2,8 @@ import * as jwt from 'jsonwebtoken';
 import { AuthenticationError } from 'apollo-server-express';
 
 export default req => {
+    console.log('req', req.headers);
+    // return;
   const token = req.headers.authorization;
 //   return;
   if (token) {

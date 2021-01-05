@@ -5,6 +5,7 @@ import { CONFIG } from './config';
 
 import LaunchesAPI from './datasources/rest_datasource/rocket_launch';
 import LivestaxAPI from './datasources/db_datasource/postgres';
+import SpotifyAPI from './datasources/rest_datasource/spotify'
 import createStore from './datasources/db_datasource/postgres/pg';
 import typeDefs from './typeDefinitions';
 import resolvers from './resolvers';
@@ -19,7 +20,8 @@ const store = createStore();
 // Set up any dataSources our resolvers need
 const dataSources = () => ({
   apiDataSource: new LaunchesAPI(),
-  apiLivestax: new LivestaxAPI({store})
+  apiLivestax: new LivestaxAPI({store}),
+  spotifyDataSource : new SpotifyAPI()
 });
 
 // Make a single schema using makeExecutableSchema

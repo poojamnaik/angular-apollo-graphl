@@ -33,6 +33,32 @@ export default {
   //   }
   // }),
   Query: {
+    combination : async (_, __, { dataSources }) => {
+      console.log("dataSources.apiDataSource", dataSources.apiDataSource);
+      const release= await dataSources.spotifyDataSource.getAllNewReleases();
+      const allLaunches= await dataSources.apiDataSource.getAllLaunches();
+      const launches = paginateResults({
+        after : null,
+        pageSize : 20,
+        results: allLaunches
+      });
+
+      const travel=  {
+        launches,
+        cursor: launches.length ? launches[launches.length - 1].cursor : null,
+        // if the cursor of the end of the paginated results is the same as the
+        // last item in _all_ results, then there are no more results after this
+        hasMore: launches.length
+          ? launches[launches.length - 1].cursor !==
+            allLaunches[allLaunches.length - 1].cursor
+          : false
+      };
+      return {release, travel};
+    },
+    getAllNewReleases: async (_, __, { dataSources }) => {
+      console.log("dataSources.apiDataSource", dataSources.apiDataSource);
+      return dataSources.spotifyDataSource.getAllNewReleases();
+    },
     launch: async (id, _, { dataSources }) => {
       console.log("dataSources.apiDataSource", dataSources.apiDataSource);
       return dataSources.apiDataSource.getLaunchById({ id });

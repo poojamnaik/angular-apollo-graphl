@@ -2,10 +2,15 @@ import { gql } from "apollo-server-express";
 
 export default gql`
 
- type Rocket {
+ type TravelVehicle {
     id: ID!
     name: String
     type: String
+  }
+  type Travel {
+    name: String,
+    missionPatchSmall: String
+    missionPatchLarge: String
   }
   type User @auth(requires: ADMIN) {
     name: String
@@ -16,6 +21,8 @@ export default gql`
     id: ID! @auth(requires: ADMIN)
     site: String @upper 
     isBooked: Boolean! @auth(requires: REVIEWER)
+    travel: Travel
+    travelVehicle: TravelVehicle
   }
   interface PaginationResponse  {
     cursor: String!
@@ -27,6 +34,10 @@ export default gql`
     launches: [Launch]!
   }
   type Query {
+    combination: LaunchAlbumCombo
+
+    getAllNewReleases:[Album]
+
     launches(
             pageSize: Int
             after: String
@@ -34,6 +45,19 @@ export default gql`
 
     launch(id: ID!): Launch
   }
+
+  type LaunchAlbumCombo{
+    release:[Album]
+     travel: LaunchConnection
+  }
+  type Album {
+    id: ID!
+    name: String
+    release_date: String
+    artist: String
+    artist_id: String
+  }
+
 
   
 `;
